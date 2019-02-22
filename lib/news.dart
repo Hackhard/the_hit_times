@@ -13,7 +13,8 @@ class News extends StatefulWidget {
 }
 
 class NewsState extends State<News> {
-  final String url = "https://api.myjson.com/bins/gf9lq";
+  final String url = "http://10.0.2.2/newapp/public/posts";
+  final String imgUrl = "http://10.0.2.2/newapp/storage/app/public/cover_images/";
   List data;
 
   Future<String> getSWData() async {
@@ -54,127 +55,16 @@ class NewsState extends State<News> {
                                     pIndex: data.length - index - 1,
                                     title: data[data.length - index - 1]['title'],
                                     body: data[data.length - index - 1]['body'],
+                                    imgUrl: imgUrl + data[data.length - index - 1]['c_image'],
                                   ),
                             ));
                           },
                           child: CusCard(
-                            imgUrl:
-                                'https://images.pexels.com/photos/1146134/pexels-photo-1146134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=400',
+                            imgUrl: imgUrl + data[data.length - index - 1]['c_image'],
+                                //'https://images.pexels.com/photos/1146134/pexels-photo-1146134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=400',
                             title: data[data.length - index - 1]['title'],
                           ),
                         );
-                        /*return new Card(
-                          child: new Padding(
-                            padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                            child: new InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      new DisplayPost(
-                                        pIndex: data.length - index - 1,
-                                        title: data[data.length - index - 1]
-                                            ['title'],
-                                        body: data[data.length - index - 1]['body'],
-                                      ),
-                                ));
-                              },
-                              child: new Column(
-                                children: <Widget>[
-                                  new Row(
-                                    children: [
-                                        Container(
-                                          */ /*constraints: BoxConstraints.expand(
-                                            width: 336.0,
-                                            height: 160.0,
-                                          ),*/ /*
-                                          alignment: Alignment.center,
-                                          decoration: new BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(8.0),
-                                                topRight: Radius.circular(8.0)),
-                                            image: DecorationImage(
-                                                image: CachedNetworkImageProvider(
-                                                    'https://images.unsplash.com/photo-1526376043067-5af36c35cd6c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=aed342eea1c8593563be90e10c423dfe&auto=format&fit=crop&w=1039&q=80',
-                                                ),
-                                                */ /*image: Base64Decoder(),*/ /*
-                                                fit: BoxFit.cover,
-                                                colorFilter: ColorFilter.mode(
-                                                    Colors.black38,
-                                                    BlendMode.darken)),
-                                          ),
-                                          padding: EdgeInsets.all(10.0),
-                                          //Description
-                                          child: Container(
-                                            width: 336.0,
-                                            margin: const EdgeInsets.symmetric(vertical: 10.0),
-                                            decoration: new BoxDecoration(
-                                              border: new Border(
-                                                left: new BorderSide(
-                                                  width: 3.0,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(10.0),
-                                              child: Text(
-                                                data[data.length - index - 1]
-                                                    ['description'],
-                                                softWrap: true,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                                textAlign: TextAlign.left,
-                                                //textDirection: TextDirection.ltr,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                  //TITLE
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(8.0),
-                                        bottomRight: Radius.circular(8.0)),
-                                      gradient: LinearGradient(
-                                        begin: FractionalOffset.bottomRight,
-                                        end: FractionalOffset.topLeft,
-                                        colors: [const Color(0xFFD3CCE3), const Color(0xFFE9E4F0), const Color(0xFFFFFFFF)], // whitish to gray
-                                        stops: [0.0,0.5,1.0],
-                                        tileMode: TileMode.clamp, // repeats the gradient over the canvas
-                                      ),
-                                    ),
-                                    child:Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 10.0,
-                                            right: 8.0,
-                                            bottom: 8.0,
-                                            top: 8.0,
-                                          ),
-                                          child: Text(
-                                              data[data.length - index - 1]['title'],
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20.0,
-                                                  fontFamily: "Anson"),
-                                              softWrap: true,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );*/
                       },
                     )
                   : new Center(
@@ -198,10 +88,11 @@ class NewsState extends State<News> {
 }
 
 class DisplayPost extends StatelessWidget {
-  DisplayPost({this.pIndex, this.body, this.title});
+  DisplayPost({this.pIndex, this.body, this.title,this.imgUrl});
   final int pIndex;
   final String body;
   final String title;
+  final String imgUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -216,10 +107,9 @@ class DisplayPost extends StatelessWidget {
           Navigator.pop(context);
         },
         child: ImageScroll(
-          imgUrl:
-              ('https://images.pexels.com/photos/1146134/pexels-photo-1146134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=400'),
           title: title,
           body: body,
+          imgUrl: imgUrl,
         ),
       ),
     );
@@ -325,6 +215,7 @@ class DisplayBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+     // backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
